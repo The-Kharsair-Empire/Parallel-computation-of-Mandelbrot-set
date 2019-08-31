@@ -1,0 +1,12 @@
+in the linux or mac command line:
+
+install the open-mpi library
+
+cd to the directory
+
+to compile the c program, type in: 
+mpicc <filename.c>
+
+to run the compile file type in:
+mpirun -n <#> a.out
+replace <#> with any number specifying number of thread
