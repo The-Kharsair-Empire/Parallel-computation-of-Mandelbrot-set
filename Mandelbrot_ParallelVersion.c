@@ -4,6 +4,7 @@
 #include <time.h>
 #include <mpi.h>
 
+
 int main(int argc, char* argv[]){
 
 	/* screen ( integer) coordinate */
@@ -158,9 +159,7 @@ int main(int argc, char* argv[]){
 	// printf("i am rank: %d, my row_cal is: %d\n", rank, row_cal);
 	
 	if (rank == masterThread) {
-		end = MPI_Wtime();
-		time = end - start;
-		printf("Mandelbrot computational time: %lf\n", time);
+		
 		int offset;
 		if (masterThread < rows_remain){
 			offset = (rows_per_procs+1) * iXmax * 3;
@@ -181,6 +180,9 @@ int main(int argc, char* argv[]){
 				offset += (rows_per_procs) * iXmax * 3;
 			}
 		}
+		end = MPI_Wtime();
+		time = end - start;
+		printf("Mandelbrot computational time: %lf\n", time);
 		int nextRow, jump, nextPixel;
 		_Bool notFinished = 1;
 		for (int block = 0; block < rows_per_procs+1 && notFinished; block ++) {
