@@ -61,7 +61,6 @@ int main(int argc, char* argv[]){
 		printf ("Error starting MPI program. Terminating.\n");
 		MPI_Abort(MPI_COMM_WORLD, rc);
 	}
-	start = threadStart = MPI_Wtime();
 	MPI_Comm_size( MPI_COMM_WORLD, &size);
 	MPI_Comm_rank( MPI_COMM_WORLD, &rank);
 
@@ -74,11 +73,12 @@ int main(int argc, char* argv[]){
 		fprintf(fp,"P6\n %s\n %d\n %d\n %d\n", comment, iXmax, iYmax, MaxColorComponentValue);
 
 		printf("File: %s successfully opened for writing.\n", filename);
+		printf("iXmax = %d, iYmax = %d, IterationMax = %d\n", iXmax, iYmax, IterationMax);
 		printf("Computing Mandelbrot Set. Please wait...\n");
 		rows_per_procs = iYmax / size;
 		rows_remain = iYmax % size;
 	}
-
+	start = threadStart = MPI_Wtime();
 	MPI_Bcast(&rows_per_procs, 1, MPI_INT, masterThread, MPI_COMM_WORLD);
 	MPI_Bcast(&rows_remain, 1, MPI_INT, masterThread, MPI_COMM_WORLD);
 	// printf("rank %d recieved rows_per_procs: %d, rows_remain: %d\n", rank, rows_per_procs, rows_remain);
